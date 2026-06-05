@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.ArtistStyleMapper">
+
+<!--    아티스트 스타일 삭제 (아티스트 아이디로)-->
+    <delete id="deleteByArtistId" parameterType="long">
+        DELETE FROM artist_style
+        WHERE artist_id = #{artistId}
+    </delete>
+
+<!--    아티스트 장르 등록-->
+    <insert id="save">
+        INSERT INTO artist_style (artist_id, style_id)
+        VALUES
+        <foreach collection="styleIds" item="styleId" separator=",">
+            (#{artistId}, #{styleId})
+        </foreach>
+    </insert>
+
+<!--    아티스트 장르 보여주는 -->
+    <select id="findStylesByArtistId" parameterType="long" resultType="Style">
+        SELECT s.*
+        FROM style s
+        JOIN artist_style ast ON s.id = ast.style_id
+        WHERE ast.artist_id = #{artistId}
+    </select>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.ArtistMapper">
+<!--    목록조회(활성화만)-->
+    <select id="findAll" resultType="Artist">
+        SELECT * FROM artist
+        WHERE is_active = true
+    </select>
+<!--    아티스트 상세조회-->
+    <select id="findById" parameterType="long" resultType="Artist">
+        SELECT * FROM artist WHERE id = #{id}
+    </select>
+
+<!--    등록-->
+    <insert id="save" parameterType="Artist" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO artist(user_id, name, bio, profile_image,
+        instagram, slack_webhook_url, google_calendar_id)
+        VALUES(#{userId}, #{name}, #{bio}, #{profileImage},
+        #{instagram}, #{slackWebhookUrl}, #{googleCalendarId})
+    </insert>
+
+<!--    수정-->
+    <update id="update" parameterType="Artist">
+        UPDATE artist
+        SET user_id = #{userId},
+        name = #{name},
+        bio = #{bio},
+        profile_image = #{profileImage},
+        instagram = #{instagram},
+        slack_webhook_url = #{slackWebhookUrl},
+        google_calendar_id = #{googleCalendarId}
+        WHERE id = #{id}
+    </update>
+<!--    비활성화-->
+    <update id="deactivate" parameterType="long">
+        UPDATE artist
+        SET is_active = FALSE,
+        deactivated_at=NOW()
+        WHERE id = #{id}
+    </update>
+
+<!--    활성화-->
+  <update id="reactivate" parameterType="long">
+      UPDATE artist
+      SET is_active = TRUE,
+      deactivated_at= NULL
+      WHERE id =#{id}
+  </update>
+
+
+</mapper>

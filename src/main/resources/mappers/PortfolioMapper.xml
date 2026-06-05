@@ -2,8 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.study.tattoo_project.mapper.ProtfolioMapper">
+<mapper namespace="com.study.tattoo_project.mapper.PortfolioMapper">
+<!--전체 조회 / 스타일,부위별 조회-->
+    <select id="findAll" resultType="Portfolio">
+        SELECT pf.*
+        FROM portfolio pf
 
+    </select>
+
+<!--    상세조회-->
+
+<!--    특정 아티스트 포트폴리오 조회-->
+
+<!--    등록 -->
+
+<!--    수정-->
+
+<!--    비활성화-->
+
+<!--    아티스트 비활성화시 비활성호ㅓ-->
+
+<!--    등록/수정후 스타일 저장 -->
+
+<!--    수정전 기존 스타일 삭제-->
+
+<!--    상세 조회떄 장르 출력-->
 
 
 </mapper>

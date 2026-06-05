@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.FlashDesignMapper">
+
+    <select id="findAll" resultType="FlashDesign">
+        SELECT fd.*
+        FROM flash_design fd
+        <if test="styleId != null">
+            JOIN flash_design_style fds ON fd.id = fds.flash_design_id
+        </if>
+        WHERE fd.is_active = true
+        <if test="artistId != null">
+            AND fd.artist_id = #{artistId}
+        </if>
+        <if test="styleId != null">
+            AND fds.style_id = #{styleId}
+        </if>
+    </select>
+
+    <select id="findById" parameterType="long" resultType="FlashDesign">
+        SELECT * FROM flash_design
+        WHERE id = #{id}
+    </select>
+
+    <insert id="save" parameterType="FlashDesign" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO flash_design (artist_id, title, description, image_url, is_active)
+        VALUES (#{artistId}, #{title}, #{description}, #{imageUrl}, true)
+    </insert>
+<!--반복문으로 styleIds에 styleId 있는만큼 반복 해서 스타일값 등록함 -->
+    <insert id="insertStyles">
+        INSERT INTO flash_design_style (flash_design_id, style_id)
+        VALUES
+        <foreach collection="styleIds" item="styleId" separator=",">
+            (#{flashDesignId}, #{styleId})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="FlashDesign">
+        UPDATE flash_design
+        SET artist_id = #{artistId},
+        title = #{title},
+        description = #{description},
+        image_url = #{imageUrl}
+        WHERE id = #{id}
+    </update>
+
+<!--    스타일 수정전 원래있던플래쉬 도안 스타일 삭제  -->
+    <delete id="deleteStyles">
+        DELETE FROM flash_design_style
+        WHERE flash_design_id = #{flashDesignId}
+    </delete>
+
+    <update id="deactivate" parameterType="long">
+        UPDATE flash_design
+        SET is_active = FALSE
+        WHERE id = #{id}
+    </update>
+<!--아티스트 비활성화시-->
+    <update id="deactivateByArtistId" parameterType="long">
+        UPDATE flash_design
+        SET is_active = FALSE
+        WHERE artist_id = #{artistId}
+    </update>
+ <select id="findStyleByFlashDesignId" parameterType="long" resultType="Style">
+     SELECT s.* FROM style s
+     JOIN flash_design_style fds ON s.id = fds.style_id
+     WHERE fds.flash_design_id = #{flashDesignId}
+ </select>
+
+
+</mapper>

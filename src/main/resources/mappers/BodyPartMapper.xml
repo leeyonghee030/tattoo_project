@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.BodyPartMapper">
+
+<!--    전체조회-->
+    <select id="findAll" resultType="BodyPart">
+        SELECT * FROM body_part
+    </select>
+
+<!--    등록-->
+    <insert id="save" parameterType="BodyPart" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO body_part(name,sort_order)
+        VALUES(#{name},#{sortOrder})</insert>
+
+<!--  수정  -->
+    <update id="update" parameterType="BodyPart">
+        UPDATE body_part
+        SET name = #{name},
+        sort_order = #{sortOrder}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM body_part
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

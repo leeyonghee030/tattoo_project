@@ -1,4 +1,14 @@
 package com.study.tattoo_project.dto.requestDto;
 
-public class FlashDesignRequrstDto {
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class FlashDesignRequestDto {
+    private Long artistId;
+    private String title;
+    private String description;
+    private String imageUrl;
+    private List<Long> styleIds;
 }

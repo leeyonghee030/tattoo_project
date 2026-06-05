@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.FlashSizeOptionMapper">
+
+
+<!--    등록-->
+  <insert id="save" parameterType="FlashSizeOption" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO flash_size_option(flash_design_id,size_label,price,duration_estimate,sort_order)
+      VALUES(#{flashDesignId}, #{sizeLabel}, #{price}, #{durationEstimate}, #{sortOrder})
+  </insert>
+<!--    수정-->
+    <update id="update" parameterType="FlashSizeOption">
+        UPDATE flash_size_option
+        SET flash_design_id = #{flashDesignId},
+        size_label = #{sizeLabel},
+        price = #{price},
+        duration_estimate = #{durationEstimate},
+        sort_order = #{sortOrder},
+        updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+<!--    삭제-->
+    <delete id="delete" parameterType="long">
+        DELETE FROM flash_size_option
+        WHERE id = #{id}
+    </delete>
+</mapper>
