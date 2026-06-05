@@ -1,4 +1,4 @@
 package com.study.tattoo_project.mapper;
 
-public class FlashDesignMApper {
+public class GenreMapper {
 }

@@ -1,4 +1,4 @@
 package com.study.tattoo_project.entity;
 
-public class Artist {
+public class FlashSizeOption {
 }

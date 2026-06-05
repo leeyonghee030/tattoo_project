@@ -3,5 +3,6 @@ package com.study.tattoo_project.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public class FlashReservationMapper {
+public interface ArtistGenre {
+
 }
