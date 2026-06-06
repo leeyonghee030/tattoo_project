@@ -2,12 +2,9 @@ package com.study.tattoo_project.service;
 
 
 import com.study.tattoo_project.dto.requestDto.FlashSizeOptionRequestDto;
-import com.study.tattoo_project.entity.FlashSizeOption;
 import com.study.tattoo_project.mapper.FlashSizeOptionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -16,25 +13,12 @@ public class FlashSizeOptionService {
 
     //등록
     public void save(FlashSizeOptionRequestDto dto){
-        FlashSizeOption flashSizeOption = new FlashSizeOption();
-        flashSizeOption.setFlashDesignId(dto.getFlashDesignId());
-        flashSizeOption.setSizeLabel(dto.getSizeLabel());
-        flashSizeOption.setPrice(dto.getPrice());
-        flashSizeOption.setDurationEstimate(dto.getDurationEstimate());
-        flashSizeOption.setSortOrder(dto.getSortOrder());
-        flashSizeOptionMapper.save(flashSizeOption);
+        flashSizeOptionMapper.save(dto.toEntity());
     }
 
     //수정
-    public  void update(Long id, FlashSizeOptionRequestDto dto){
-        FlashSizeOption flashSizeOption = new FlashSizeOption();
-        flashSizeOption.setId(id);
-        flashSizeOption.setFlashDesignId(dto.getFlashDesignId());
-        flashSizeOption.setSizeLabel(dto.getSizeLabel());
-        flashSizeOption.setPrice(dto.getPrice());
-        flashSizeOption.setDurationEstimate(dto.getDurationEstimate());
-        flashSizeOption.setSortOrder(dto.getSortOrder());
-        flashSizeOptionMapper.update(flashSizeOption);
+    public void update(Long id, FlashSizeOptionRequestDto dto){
+        flashSizeOptionMapper.update(dto.toEntity(id));
     }
 
     //삭제

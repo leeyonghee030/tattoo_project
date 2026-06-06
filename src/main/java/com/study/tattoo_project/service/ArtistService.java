@@ -35,29 +35,12 @@ public class ArtistService {
 
     //등록
     public void save(ArtistRequestDto dto){
-        Artist artist = new Artist();
-        artist.setUserId(dto.getUserId());
-        artist.setName(dto.getName());
-        artist.setBio(dto.getBio());
-        artist.setProfileImage(dto.getProfileImage());
-        artist.setInstagram(dto.getInstagram());
-        artist.setSlackWebhookUrl(dto.getSlackWebhookUrl());
-        artist.setGoogleCalendarId(dto.getGoogleCalendarId());
-        artistMapper.save(artist);
+        artistMapper.save(dto.toEntity());
     }
 
     //수정
     public void update(Long id, ArtistRequestDto dto){
-        Artist artist = new Artist();
-        artist.setId(id);
-        artist.setUserId(dto.getUserId());
-        artist.setName(dto.getName());
-        artist.setBio(dto.getBio());
-        artist.setProfileImage(dto.getProfileImage());
-        artist.setInstagram(dto.getInstagram());
-        artist.setSlackWebhookUrl(dto.getSlackWebhookUrl());
-        artist.setGoogleCalendarId(dto.getGoogleCalendarId());
-        artistMapper.update(artist);
+        artistMapper.update(dto.toEntity(id));
     }
 
     //비활성화

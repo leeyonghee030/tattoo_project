@@ -29,23 +29,13 @@ public class FlashDesignService {
     }
 
     public void save(FlashDesignRequestDto dto) {
-        FlashDesign flashDesign = new FlashDesign();
-        flashDesign.setArtistId(dto.getArtistId());
-        flashDesign.setTitle(dto.getTitle());
-        flashDesign.setDescription(dto.getDescription());
-        flashDesign.setImageUrl(dto.getImageUrl());
+        FlashDesign flashDesign = dto.toEntity();
         flashDesignMapper.save(flashDesign);
         flashDesignMapper.insertStyles(flashDesign.getId(), dto.getStyleIds());
     }
 
     public void update(Long id, FlashDesignRequestDto dto) {
-        FlashDesign flashDesign = new FlashDesign();
-        flashDesign.setId(id);
-        flashDesign.setArtistId(dto.getArtistId());
-        flashDesign.setTitle(dto.getTitle());
-        flashDesign.setDescription(dto.getDescription());
-        flashDesign.setImageUrl(dto.getImageUrl());
-        flashDesignMapper.update(flashDesign);
+        flashDesignMapper.update(dto.toEntity(id));
         flashDesignMapper.deleteStyles(id);
         flashDesignMapper.insertStyles(id, dto.getStyleIds());
     }
