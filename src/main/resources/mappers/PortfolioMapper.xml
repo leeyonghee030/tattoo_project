@@ -4,29 +4,83 @@
 
 <mapper namespace="com.study.tattoo_project.mapper.PortfolioMapper">
 <!--전체 조회 / 스타일,부위별 조회-->
-    <select id="findAll" resultType="Portfolio">
-        SELECT pf.*
-        FROM portfolio pf
 
+    <select id="findAll" resultType="com.study.tattoo_project.entity.Portfolio">
+<!-- DISTINCT 스타일 여러개일때 중복 제외         -->
+        SELECT DISTINCT pf.*
+        FROM portfolio pf
+        <if test="styleId != null">
+            JOIN portfolio_style ps ON pf.id = ps.portfolio_id
+        </if>
+        WHERE pf.is_active = true
+        <if test="styleId != null">
+            AND ps.style_id = #{styleId}
+        </if>
+        <if test="bodyPartId != null">
+            AND pf.body_part_id = #{bodyPartId}
+<!--            bodyPartId는 portfolio에 있어서 조인안해도됨 -->
+        </if>
     </select>
 
 <!--    상세조회-->
+    <select id="findById" parameterType="long" resultType="portfolio">
+        SELECT * FROM portfolio
+        WHERE id = #{id}
+    </select>
 
-<!--    특정 아티스트 포트폴리오 조회-->
-
+    <!--    특정 아티스트 포트폴리오 조회-->
+    <select id="findByArtistId" parameterType="long" resultType="portfolio">
+        SELECT * FROM portfolio
+        WHERE artist_id = #{artistId}
+    </select>
 <!--    등록 -->
-
+    <insert id="save" parameterType="Portfolio" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO portfolio(artist_id, image_url, title, body_part_id, description)
+        VALUES(#{artistId}, #{imageUrl}, #{title}, #{bodyPartId}, #{description})
+    </insert>
 <!--    수정-->
+    <update id="update" parameterType="portfolio">
+        UPDATE portfolio
+        SET artist_id = #{artistId},
+        image_url = #{imageUrl},
+        title = #{title},
+        body_part_id = #{bodyPartId},
+        description = #{description}
+        WHERE id = #{id}
+    </update>
 
 <!--    비활성화-->
-
-<!--    아티스트 비활성화시 비활성호ㅓ-->
-
+    <update id="deactivate" parameterType="long">
+        UPDATE portfolio
+        SET is_active = FALSE
+        WHERE id = #{id}
+    </update>
+<!--    아티스트 비활성화시 비활성호ㅏ-->
+    <update id="deactivateByArtistId" parameterType="long">
+        UPDATE portfolio
+        SET is_active = FALSE
+        WHERE artist_id = #{artistId}
+    </update>
 <!--    등록/수정후 스타일 저장 -->
+    <insert id="insertStyles">
+        INSERT INTO portfolio_style(portfolio_id, style_id)
+        VALUES <foreach collection="styleIds" item="styleId" separator=",">
+        (#{portfolioId}, #{styleId})
+    </foreach>
+    </insert>
 
 <!--    수정전 기존 스타일 삭제-->
+    <delete id="deleteStyles" parameterType="long">
+        DELETE FROM portfolio_style
+        WHERE portfolio_id = #{portfolioId}
+    </delete>
 
 <!--    상세 조회떄 장르 출력-->
+    <select id="findStyleByPortfolioId" parameterType="long" resultType="Style">
+        SELECT s.* FROM style s
+        JOIN portfolio_style ps ON s.id = ps.style_id
+        WHERE portfolio_id = #{portfolioId}
+    </select>
 
 
 </mapper>

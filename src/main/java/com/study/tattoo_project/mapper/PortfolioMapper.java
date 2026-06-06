@@ -1,6 +1,5 @@
 package com.study.tattoo_project.mapper;
 
-import com.study.tattoo_project.entity.FlashDesign;
 import com.study.tattoo_project.entity.Portfolio;
 import com.study.tattoo_project.entity.Style;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,7 +19,7 @@ public interface PortfolioMapper {
 
 
 //    특정 아티스트 포트폴리오 조회
-    Portfolio findByArtistId(Long artistId);
+    List<Portfolio> findByArtistId(Long artistId);
 
 //    등록
     void save(Portfolio portfolio);
@@ -34,12 +33,12 @@ public interface PortfolioMapper {
     void deactivateByArtistId(Long artistId);
 
 //    등록/수정후 스타일 저장
-    void insertStyles(@Param("artistId") Long artistId,
+    void insertStyles(@Param("portfolioId") Long portfolioId,
                       @Param("styleIds") List<Long> styleIds);
 
 //    수정전 기존 스타일 전체 삭제
-    void deleteStyles(Long artistId);
+    void deleteStyles(Long portfolioId);
 //    상세 조회떄  장르 출력
-    List<Style> findStyleByArtistId(Long artistId);
+    List<Style> findStyleByPortfolioId(Long portfolioId);
 
 }
