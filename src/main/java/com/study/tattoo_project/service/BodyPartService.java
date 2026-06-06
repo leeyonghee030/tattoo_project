@@ -21,18 +21,13 @@ public class BodyPartService {
 
     //등록
     public void save(BodyPartRequestDto requestDto){
-        BodyPart bodyPart = new BodyPart();
-         bodyPart.setName(requestDto.getName());
-         bodyPart.setSortOrder(requestDto.getSortOrder());
+        BodyPart bodyPart = requestDto.toEntity();
          bodyPartMapper.save(bodyPart);
     }
 
     //수정
     public void update(Long id, BodyPartRequestDto requestDto){
-        BodyPart bodyPart = new BodyPart();
-        bodyPart.setId(id);
-        bodyPart.setName(requestDto.getName());
-        bodyPart.setSortOrder(requestDto.getSortOrder());
+        BodyPart bodyPart = requestDto.toEntity(id);
         bodyPartMapper.update(bodyPart);
     }
 

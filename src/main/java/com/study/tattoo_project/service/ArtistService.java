@@ -18,6 +18,7 @@ public class ArtistService {
     private final ArtistMapper artistMapper;
     private final ArtistStyleService artistStyleService;
     private final FlashDesignService flashDesignService;
+    private final PortfolioService portfolioService;
 
     //목록 조회 (활성화 아티스트만)
     public List<ArtistResponseDto> findAll(){
@@ -48,8 +49,7 @@ public class ArtistService {
     public void deactivate(Long id){
         artistMapper.deactivate(id);
         flashDesignService.deactivateByArtistId(id);
-        // TODO: 5단계 - Portfolio 만들 때 추가
-        // portfolioMapper.deactivateByArtistId(id);
+        portfolioService.deactivateByArtistId(id);
         // TODO: 9단계 - Notice 만들 때 추가
         // noticeMapper.deactivateByAuthorId(artist.getUserId());
 

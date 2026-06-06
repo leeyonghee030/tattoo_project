@@ -23,19 +23,13 @@ public class StyleService {
 
     //등록
     public void save(StyleRequestDto request) {
-        //entity화
-        Style style = new Style();
-        style.setName(request.getName());
-        style.setSortOrder(request.getSortOrder());
+        Style style = request.toEntity();
         styleMapper.save(style);
     }
 
     //수정
     public void update(Long id, StyleRequestDto requestDto) {
-        Style style = new Style();
-        style.setId(id);
-        style.setName(requestDto.getName());
-        style.setSortOrder(requestDto.getSortOrder());
+      Style style = requestDto.toEntity(id);
         styleMapper.update(style);
     }
 
