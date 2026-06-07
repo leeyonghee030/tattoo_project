@@ -49,6 +49,14 @@ playwright-mcp/
 playwright-report/
 test-results/
 
+### Runtime generated ###
+uploads/
+logs/
+*.log
+
+### Environment-specific configs ###
+application-*.yml
+
 ### OS ###
 .DS_Store
 Thumbs.db
