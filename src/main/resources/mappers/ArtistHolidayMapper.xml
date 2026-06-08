@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.ArtistHolidayMapper">
+<!--    조회-->
+    <select id="findByArtistId" parameterType="long" resultType="ArtistHoliday">
+        SELECT * FROM artist_holiday
+        WHERE artist_id = #{artistId}
+    </select>
+
+<!--    등록 (타입에 따라)-->
+    <insert id="save" parameterType="ArtistHoliday" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO artist_holiday(artist_id, holiday_type, day_of_week, holiday_date, reason)
+        VALUES (
+        #{artistId},
+        #{holidayType},
+        <if test="holidayType.name() == 'FIXED'">#{dayOfWeek}, NULL</if>
+        <if test="holidayType.name() == 'VARIABLE'">NULL, #{holidayDate}</if>
+        , #{reason}
+        )
+    </insert>
+
+<!--    수정-->
+    <update id="update" parameterType="ArtistHoliday">
+        UPDATE artist_holiday
+        SET holiday_type = #{holidayType},
+        day_of_week = #{dayOfWeek},
+        holiday_date = #{holidayDate},
+        reason = #{reason}
+        WHERE id = #{id}
+    </update>
+
+<!--    삭제-->
+    <delete id="delete" parameterType="long">
+        DELETE FROM artist_holiday
+        WHERE id = #{id}
+    </delete>
+
+<!--    가용성캘린더-->
+    <select id="findActiveArtistHolidays" resultType="ArtistHoliday">
+        SELECT ah.* FROM artist_holiday ah
+        JOIN artist a ON ah.artist_id = a.id
+        WHERE a.is_active = TRUE
+    </select>
+
+<!--    타투샵 전체 휴무 -->
+    <insert id="insertBulk" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO artist_holiday (artist_id, holiday_type, day_of_week, holiday_date, reason)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.artistId}, #{item.holidayType}, #{item.dayOfWeek}, #{item.holidayDate}, #{item.reason})
+        </foreach>
+    </insert>
+
+
+
+
+</mapper>

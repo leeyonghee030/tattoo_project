@@ -2,6 +2,7 @@ package com.study.tattoo_project.controller;
 
 
 import com.study.tattoo_project.dto.requestDto.FlashDesignRequestDto;
+import com.study.tattoo_project.dto.responseDto.ApiResponse;
 import com.study.tattoo_project.dto.responseDto.FlashDesignResponseDto;
 import com.study.tattoo_project.service.FlashDesignService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class FlashDesignController {
 
     //수정
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id,@RequestBody FlashDesignRequestDto dto){
+    public void update(@PathVariable Long id, @RequestBody FlashDesignRequestDto dto){
         flashDesignService.update(id,dto);
     }
 
