@@ -4,11 +4,16 @@
 
 <mapper namespace="com.study.tattoo_project.mapper.BodyPartMapper">
 
+<!--    -->
+    <select id="findById" parameterType="long" resultType="BodyPart">
+        SELECT * FROM body_part
+        WHERE id = #{id}
+    </select>
+
 <!--    전체조회-->
     <select id="findAll" resultType="BodyPart">
         SELECT * FROM body_part
     </select>
-
 <!--    등록-->
     <insert id="save" parameterType="BodyPart" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO body_part(name,sort_order)

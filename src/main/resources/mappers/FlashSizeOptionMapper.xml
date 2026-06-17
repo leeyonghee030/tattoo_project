@@ -4,6 +4,11 @@
 
 <mapper namespace="com.study.tattoo_project.mapper.FlashSizeOptionMapper">
 
+<!--    -->
+    <select id="findById" parameterType="long" resultType="FlashSizeOption">
+        SELECT * FROM flash_size_option
+        WHERE id = #{id}
+    </select>
 
 <!--    등록-->
   <insert id="save" parameterType="FlashSizeOption" useGeneratedKeys="true" keyProperty="id">

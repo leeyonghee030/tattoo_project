@@ -14,6 +14,7 @@ import java.util.List;
 public class BodyPartService {
     private final BodyPartMapper bodyPartMapper;
 
+
     //조회
     public List<BodyPartResponseDto> findAll(){
         return bodyPartMapper.findAll().stream().map(BodyPartResponseDto::from).toList();

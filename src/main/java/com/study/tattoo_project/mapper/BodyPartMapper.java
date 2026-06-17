@@ -9,6 +9,8 @@ import java.util.List;
 public interface BodyPartMapper {
     //전체조회
     List<BodyPart> findAll();
+//
+    BodyPart findById(Long id);
     //등록
     void save(BodyPart bodyPart);
     //수정

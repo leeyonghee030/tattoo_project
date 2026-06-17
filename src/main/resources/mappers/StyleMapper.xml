@@ -7,6 +7,11 @@
     <select id="findAll" resultType="Style">
         SELECT * FROM style
     </select>
+
+    <select id="findById" parameterType="long" resultType="Style">
+        SELECT * FROM style
+        WHERE id = #{id}
+    </select>
 <!--등록-->
     <insert id="save" parameterType="Style" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO style (name, sort_order)

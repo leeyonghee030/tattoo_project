@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface FlashSizeOptionMapper {
+
+//
+    FlashSizeOption findById(Long id);
     //등록
     void save(FlashSizeOption flashSizeOption);
     //수정
