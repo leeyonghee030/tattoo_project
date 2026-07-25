@@ -54,6 +54,14 @@
     <select id="findAll" resultType="Reservation">
         SELECT <include refid="selectColumns"/>
         FROM reservation
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="artistId != null">AND artist_id = #{artistId}</if>
+            <if test="startDate != null">AND created_at &gt;= #{startDate}</if>
+            <if test="endDate != null">AND created_at &lt;= #{endDate}</if>
+<!--             XML에서 > 기호를 직접 쓰면 태그로 해석돼서 오류남.
+  그래서 특수문자를 escape 처리해야 함-->
+        </where>
         ORDER BY created_at DESC
     </select>
 
@@ -62,6 +70,14 @@
     <update id="updateStatus">
         UPDATE reservation
         SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+<!--    상태 확정으로 변경 -->
+    <update id="updateConfirm">
+        UPDATE reservation
+        SET status = 'CONFIRMED',
+        confirm_date = #{confirmedDate}
         WHERE id = #{id}
     </update>
 

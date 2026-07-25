@@ -4,7 +4,9 @@ package com.study.tattoo_project.controller;
 import com.study.tattoo_project.dto.requestDto.FlashDesignRequestDto;
 import com.study.tattoo_project.dto.responseDto.ApiResponse;
 import com.study.tattoo_project.dto.responseDto.FlashDesignResponseDto;
+import com.study.tattoo_project.dto.responseDto.FlashSizeOptionResponseDto;
 import com.study.tattoo_project.service.FlashDesignService;
+import com.study.tattoo_project.service.FlashSizeOptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ import java.util.List;
 public class FlashDesignController {
 
     private  final FlashDesignService flashDesignService;
+    private final FlashSizeOptionService flashSizeOptionService;
     // 전체조회, 아티스트,장르목록조회
     @GetMapping
     public List<FlashDesignResponseDto> findAll(
@@ -28,6 +31,12 @@ public class FlashDesignController {
     @GetMapping("/{id}")
     public FlashDesignResponseDto findById(@PathVariable Long id){
         return flashDesignService.findById(id);
+    }
+
+    //도안별 사이즈 옵션 조회
+    @GetMapping("/{id}/size-options")
+    public List<FlashSizeOptionResponseDto> findSizeOptions(@PathVariable Long id){
+        return flashSizeOptionService.findByFlashDesignId(id);
     }
 
     //등록

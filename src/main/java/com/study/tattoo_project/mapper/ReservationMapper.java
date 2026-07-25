@@ -1,10 +1,12 @@
 package com.study.tattoo_project.mapper;
 
 
+import com.study.tattoo_project.dto.requestDto.ReservationSearchConditionRequestDto;
 import com.study.tattoo_project.entity.Reservation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +19,11 @@ public interface ReservationMapper {
 // 상세조회
     Optional<Reservation> findById(Long id);
 // 목록조회
-    List<Reservation> findAll(); // 필터 조건은 Day4에서 추가
+    List<Reservation> findAll(ReservationSearchConditionRequestDto dto); // 필터 조건은 Day4에서 추가
 // 상태 변경 수정
     int updateStatus(@Param("id") Long id, @Param("status") Reservation.ReservationStatus status);
 // 중복 확인
     boolean existsByReservationNo(String reservationNo);
-
+//확정 상태로 수정
+    int updateConfirm(@Param("id") Long id,@Param("confirmedDate") LocalDate confirmedDate);
 }

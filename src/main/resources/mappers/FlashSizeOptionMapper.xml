@@ -10,6 +10,12 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findByFlashDesignId" parameterType="long" resultType="FlashSizeOption">
+        SELECT * FROM flash_size_option
+        WHERE flash_design_id = #{flashDesignId}
+        ORDER BY sort_order
+    </select>
+
 <!--    등록-->
   <insert id="save" parameterType="FlashSizeOption" useGeneratedKeys="true" keyProperty="id">
       INSERT INTO flash_size_option(flash_design_id,size_label,price,duration_estimate,sort_order)

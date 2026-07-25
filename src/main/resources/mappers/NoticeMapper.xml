@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.tattoo_project.mapper.NoticeMapper">
+
+<!--    전체조회-->
+    <select id="findAll" resultType="Notice">
+        SELECT * FROM notice
+        WHERE is_active = true
+    </select>
+
+<!--    상세조회-->
+    <select id="findById" parameterType="long" resultType="Notice">
+        SELECT * FROM notice
+        WHERE id = #{id}
+    </select>
+
+<!--이미지 가지고오지 -->
+    <select id="findImagesByNoticeId" parameterType="long" resultType="String">
+        SELECT image_url FROM notice_image
+        WHERE notice_id = #{noticeId}
+        ORDER BY sort_order
+    </select>
+<!--    등록-->
+    <insert id="insert" parameterType="Notice"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO notice(author_id, title, content)
+        VALUES(#{authorId}, #{title}, #{content})
+    </insert>
+<!--    사진등록-->
+    <insert id="insertImage" parameterType="NoticeImage" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO notice_image(notice_id, image_url, sort_order)
+        VALUES(#{noticeId}, #{imageUrl}, #{sortOrder})
+    </insert>
+
+<!--    수정-->
+    <update id="update" parameterType="Notice">
+        UPDATE notice
+        SET author_id = #{authorId},
+        title = #{title},
+        content = #{content}
+        WHERE id = #{id}
+    </update>
+
+<!--    수정 시 이미지 전체 삭제후 재등록 -->
+    <delete id="deleteImages" parameterType="long">
+        DELETE FROM notice_image
+        WHERE notice_id = #{noticeId}
+    </delete>
+    
+<!--    비활성화-->
+    <update id="deactivate" parameterType="long">
+        UPDATE notice
+        SET is_active = FALSE
+        WHERE id = #{id}
+    </update>
+
+
+
+</mapper>
