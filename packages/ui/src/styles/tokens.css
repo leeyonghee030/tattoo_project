@@ -1,0 +1,142 @@
+/* ---------------------------------------------------------------------------
+ * 디자인 토큰 — 블랙 & 화이트 기반 무채색 시스템
+ *
+ * 규칙
+ *  1. 색은 전부 무채색. 유채색은 "위험(danger)" 하나만 예외로 허용한다.
+ *  2. 예약 상태처럼 구분이 필요한 요소는 색이 아니라 채움 강도(fill weight)와
+ *     테두리 스타일로 구분한다. 흑백 인쇄·색약 사용자에게도 동일하게 읽힌다.
+ *  3. 다크 모드는 같은 토큰 이름을 반전값으로 재정의한다. 컴포넌트는 토큰만 참조하므로
+ *     다크 모드 분기 코드를 갖지 않는다.
+ *
+ * 모든 토큰은 `--tt-` 접두어를 쓴다. Tailwind v4의 테마 네임스페이스
+ * (--color-*, --radius-*, --shadow-*, --ease-*, --container-*)와 이름이 겹치면
+ * index.css의 `@theme inline` 매핑이 자기 참조가 되어 깨진다.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* ── 표면 ─────────────────────────────────────────────── */
+  --tt-bg: #ffffff;
+  --tt-surface: #fafafa;
+  --tt-surface-strong: #f4f4f5;
+  --tt-surface-inset: #ebebed;
+
+  /* ── 전경(텍스트/아이콘) ──────────────────────────────── */
+  --tt-fg: #09090b;
+  --tt-fg-muted: #71717a;
+  --tt-fg-subtle: #a1a1aa;
+  --tt-fg-onaccent: #ffffff;
+
+  /* ── 테두리 ───────────────────────────────────────────── */
+  --tt-border: #e4e4e7;
+  --tt-border-strong: #d4d4d8;
+  --tt-border-focus: #09090b;
+
+  /* ── 강조(주 버튼·활성 상태) ──────────────────────────── */
+  --tt-accent: #09090b;
+  --tt-accent-hover: #27272a;
+  --tt-accent-active: #3f3f46;
+
+  /* ── 위험: 유일한 유채색. 파괴적 동작·차단 안내에만 사용 ── */
+  --tt-danger: #b91c1c;
+  --tt-danger-bg: #fef2f2;
+  --tt-danger-border: #fecaca;
+
+  /* ── 그림자: 무채색에서는 아주 얕게만 ─────────────────── */
+  --tt-shadow-xs: 0 1px 2px 0 rgb(9 9 11 / 0.04);
+  --tt-shadow-sm: 0 1px 3px 0 rgb(9 9 11 / 0.06), 0 1px 2px -1px rgb(9 9 11 / 0.04);
+  --tt-shadow-md: 0 4px 12px -2px rgb(9 9 11 / 0.08), 0 2px 4px -2px rgb(9 9 11 / 0.04);
+  --tt-shadow-lg: 0 12px 32px -4px rgb(9 9 11 / 0.12), 0 4px 8px -4px rgb(9 9 11 / 0.06);
+  --tt-shadow-overlay: 0 24px 64px -12px rgb(9 9 11 / 0.18);
+
+  /* ── 반경 ─────────────────────────────────────────────── */
+  --tt-radius-xs: 4px;
+  --tt-radius-sm: 6px;
+  --tt-radius-md: 10px;
+  --tt-radius-lg: 14px;
+  --tt-radius-xl: 20px;
+  --tt-radius-2xl: 28px;
+
+  /* ── 모션: 토스 특유의 "빠르게 나가고 부드럽게 멈추는" 곡선 ── */
+  --tt-ease-out: cubic-bezier(0.32, 0.72, 0, 1);
+  --tt-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --tt-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --tt-duration-fast: 140ms;
+  --tt-duration-base: 220ms;
+  --tt-duration-slow: 320ms;
+
+  /* ── 레이아웃 ─────────────────────────────────────────── */
+  --tt-container-narrow: 26rem; /* 예약 플로우 · 단일 초점 화면 */
+  --tt-container-content: 48rem; /* 본문 읽기 */
+  --tt-container-wide: 80rem; /* 목록 · 갤러리 */
+  --tt-container-admin: 96rem; /* 관리자 테이블 */
+  --tt-header-height: 3.5rem;
+  --tt-sticky-cta-height: 5rem; /* 하단 고정 CTA가 차지하는 높이 */
+}
+
+/* 다크 모드 값. 미디어 쿼리와 명시 토글 양쪽에서 같은 선언을 쓰기 위해
+   커스텀 프로퍼티 세트를 한 번만 정의하고 두 셀렉터에 적용한다. */
+:root[data-theme='dark'],
+:root[data-theme='dark'] ::backdrop {
+  --tt-bg: #09090b;
+  --tt-surface: #131316;
+  --tt-surface-strong: #1c1c21;
+  --tt-surface-inset: #26262b;
+
+  --tt-fg: #fafafa;
+  --tt-fg-muted: #a1a1aa;
+  --tt-fg-subtle: #71717a;
+  --tt-fg-onaccent: #09090b;
+
+  --tt-border: #27272a;
+  --tt-border-strong: #3f3f46;
+  --tt-border-focus: #fafafa;
+
+  --tt-accent: #fafafa;
+  --tt-accent-hover: #e4e4e7;
+  --tt-accent-active: #d4d4d8;
+
+  --tt-danger: #f87171;
+  --tt-danger-bg: #2a1315;
+  --tt-danger-border: #5c2224;
+
+  --tt-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+  --tt-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --tt-shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.55), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --tt-shadow-lg: 0 12px 32px -4px rgb(0 0 0 / 0.6), 0 4px 8px -4px rgb(0 0 0 / 0.45);
+  --tt-shadow-overlay: 0 24px 64px -12px rgb(0 0 0 / 0.7);
+}
+
+/* 시스템이 다크일 때 자동 적용. 단 사용자가 토글로 라이트를 명시하면
+   :not([data-theme='light']) 덕분에 이 블록이 적용되지 않는다. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]):not([data-theme='light']),
+  :root:not([data-theme]) ::backdrop {
+    --tt-bg: #09090b;
+    --tt-surface: #131316;
+    --tt-surface-strong: #1c1c21;
+    --tt-surface-inset: #26262b;
+
+    --tt-fg: #fafafa;
+    --tt-fg-muted: #a1a1aa;
+    --tt-fg-subtle: #71717a;
+    --tt-fg-onaccent: #09090b;
+
+    --tt-border: #27272a;
+    --tt-border-strong: #3f3f46;
+    --tt-border-focus: #fafafa;
+
+    --tt-accent: #fafafa;
+    --tt-accent-hover: #e4e4e7;
+    --tt-accent-active: #d4d4d8;
+
+    --tt-danger: #f87171;
+    --tt-danger-bg: #2a1315;
+    --tt-danger-border: #5c2224;
+
+    --tt-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.4);
+    --tt-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+    --tt-shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.55), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+    --tt-shadow-lg: 0 12px 32px -4px rgb(0 0 0 / 0.6), 0 4px 8px -4px rgb(0 0 0 / 0.45);
+    --tt-shadow-overlay: 0 24px 64px -12px rgb(0 0 0 / 0.7);
+  }
+}

@@ -1,0 +1,277 @@
+/* ---------------------------------------------------------------------------
+ * @tattoo/ui — 테마 매핑 + 기본 레이어
+ *
+ * 사용법 (앱의 globals.css):
+ *   @import 'tailwindcss';
+ *   @import '@tattoo/ui/styles.css';
+ *   @source '<packages/ui/src 경로>';   ← 이 패키지의 클래스도 스캔되게
+ *
+ * `@theme inline`을 쓰는 이유: inline이 아니면 Tailwind가 빌드 시점에 토큰 값을
+ * 그대로 박아버려서 다크 모드 런타임 전환이 먹지 않는다. inline이면 유틸리티가
+ * var(--tt-*)를 참조하므로 토큰 재정의가 즉시 반영된다.
+ * ------------------------------------------------------------------------- */
+
+@import './tokens.css';
+
+@theme inline {
+  /* 색 */
+  --color-bg: var(--tt-bg);
+  --color-surface: var(--tt-surface);
+  --color-surface-strong: var(--tt-surface-strong);
+  --color-surface-inset: var(--tt-surface-inset);
+
+  --color-fg: var(--tt-fg);
+  --color-fg-muted: var(--tt-fg-muted);
+  --color-fg-subtle: var(--tt-fg-subtle);
+  --color-fg-onaccent: var(--tt-fg-onaccent);
+
+  --color-line: var(--tt-border);
+  --color-line-strong: var(--tt-border-strong);
+
+  --color-accent: var(--tt-accent);
+  --color-accent-hover: var(--tt-accent-hover);
+  --color-accent-active: var(--tt-accent-active);
+
+  --color-danger: var(--tt-danger);
+  --color-danger-bg: var(--tt-danger-bg);
+  --color-danger-border: var(--tt-danger-border);
+
+  /* 반경 */
+  --radius-xs: var(--tt-radius-xs);
+  --radius-sm: var(--tt-radius-sm);
+  --radius-md: var(--tt-radius-md);
+  --radius-lg: var(--tt-radius-lg);
+  --radius-xl: var(--tt-radius-xl);
+  --radius-2xl: var(--tt-radius-2xl);
+
+  /* 그림자 */
+  --shadow-xs: var(--tt-shadow-xs);
+  --shadow-sm: var(--tt-shadow-sm);
+  --shadow-md: var(--tt-shadow-md);
+  --shadow-lg: var(--tt-shadow-lg);
+  --shadow-overlay: var(--tt-shadow-overlay);
+
+  /* 이징 */
+  --ease-out-quint: var(--tt-ease-out);
+  --ease-smooth: var(--tt-ease-in-out);
+  --ease-spring: var(--tt-ease-spring);
+
+  /* 컨테이너 */
+  --container-narrow: var(--tt-container-narrow);
+  --container-content: var(--tt-container-content);
+  --container-wide: var(--tt-container-wide);
+  --container-admin: var(--tt-container-admin);
+
+  /* 타이포 — 한글 기준으로 자간을 살짝 좁힌다 */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Segoe UI',
+    Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+
+  /* 디스플레이 타이포: 큰 숫자·금액·히어로 문구용 */
+  --text-display: 2.75rem;
+  --text-display--line-height: 1.12;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 700;
+
+  --text-title: 1.5rem;
+  --text-title--line-height: 1.32;
+  --text-title--letter-spacing: -0.022em;
+  --text-title--font-weight: 700;
+
+  --text-subtitle: 1.125rem;
+  --text-subtitle--line-height: 1.45;
+  --text-subtitle--letter-spacing: -0.015em;
+  --text-subtitle--font-weight: 600;
+
+  /* 애니메이션 */
+  --animate-slide-up: slide-up var(--tt-duration-slow) var(--tt-ease-out) both;
+  --animate-slide-left: slide-left var(--tt-duration-slow) var(--tt-ease-out) both;
+  --animate-slide-right: slide-right var(--tt-duration-slow) var(--tt-ease-out) both;
+  --animate-fade-in: fade-in var(--tt-duration-base) var(--tt-ease-out) both;
+  --animate-scale-in: scale-in var(--tt-duration-base) var(--tt-ease-out) both;
+  --animate-sheet-in: sheet-in var(--tt-duration-slow) var(--tt-ease-out) both;
+  --animate-shimmer: shimmer 1.6s var(--tt-ease-in-out) infinite;
+}
+
+/* ── 키프레임 ─────────────────────────────────────────────
+   토스식 단계 전환: 다음 단계는 오른쪽에서, 뒤로가기는 왼쪽에서 들어온다.
+   이동 거리를 짧게(12~16px) 두는 게 핵심이다. 크게 움직이면 산만해진다. */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ── 기본 레이어 ──────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--tt-border);
+  }
+
+  html {
+    /* 예약 플로우에서 단계가 바뀔 때 스크롤이 튀지 않게 */
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* iOS 사파리 하단 바를 감안한 실제 뷰포트 높이 */
+    --tt-vh: 100dvh;
+  }
+
+  body {
+    background-color: var(--tt-bg);
+    color: var(--tt-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'tnum' 0;
+    letter-spacing: -0.011em;
+  }
+
+  /* 숫자(금액·예약번호·통계)는 자리폭을 고정해 표에서 흔들리지 않게 */
+  .tabular,
+  table,
+  time,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.024em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* 포커스 링: 무채색이라 대비를 링 두께로 확보한다.
+     마우스 클릭에는 링을 띄우지 않고 키보드에서만 보이게(:focus-visible). */
+  :focus-visible {
+    outline: 2px solid var(--tt-border-focus);
+    outline-offset: 2px;
+    border-radius: var(--tt-radius-xs);
+  }
+
+  /* 모션 민감 사용자: 전환을 즉시 끝낸다 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* 이미지 기본값: 도안 갤러리에서 레이아웃 밀림 방지 */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 스크롤바 — 무채색 얇은 형태 */
+  @supports selector(::-webkit-scrollbar) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--tt-border-strong);
+      border: 3px solid var(--tt-bg);
+      border-radius: var(--tt-radius-full, 9999px);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--tt-fg-subtle);
+    }
+  }
+}
+
+/* ── 커스텀 유틸리티 ──────────────────────────────────── */
+@utility tap-highlight-none {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 하단 고정 CTA가 콘텐츠를 가리지 않도록 확보하는 여백 */
+@utility pb-cta {
+  padding-bottom: calc(var(--tt-sticky-cta-height) + env(safe-area-inset-bottom, 0px));
+}
+
+/* 모바일에서 안전영역까지 채우는 고정 바 */
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
