@@ -1,1 +1,6 @@
-rootProject.name = 'tattoo_project'
+rootProject.name = 'tattoo-project'
+
+// 모노레포: 백엔드는 apps/api 하위에 위치한다.
+// 실행 예) ./gradlew :api:bootRun   ./gradlew :api:build
+include 'api'
+project(':api').projectDir = file('apps/api')
