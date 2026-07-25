@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+/* Pretendard — 한글 자형이 UI에 가장 잘 맞는다. dynamic-subset은 화면에 실제로
+   쓰인 글자만 내려받아서 초기 로딩이 가볍다. */
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+
+/* 디자인 토큰 + @theme 매핑 + 기본 레이어 */
+@import '@tattoo/ui/styles.css';
+
+/* Tailwind v4는 CSS 파일 위치를 기준으로 클래스를 스캔한다.
+   packages/ui는 이 파일 밖에 있으므로 명시적으로 알려줘야 한다.
+   빠뜨리면 UI 패키지 컴포넌트의 클래스가 전부 누락되어 스타일 없이 렌더된다. */
+@source '../../../../packages/ui/src';
