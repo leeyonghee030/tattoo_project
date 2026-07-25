@@ -8,6 +8,16 @@ build/
 **/src/main/resources/application.yml
 **/src/main/resources/application-*.yml
 
+### OMC 도구 상태 ###
+# 세션마다 자동 갱신되는 런타임 산출물이라 커밋하면 노이즈만 쌓인다.
+# (.omc/state/, project-memory.json, notepad.md, logs/ 등)
+#
+# `.omc/`가 아니라 `.omc/*`로 쓴 이유: 디렉터리 자체를 제외하면 git이 그 안으로
+# 내려가지 않아 아래 예외 규칙이 동작하지 않는다. 내용만 제외해야 예외가 먹는다.
+.omc/*
+# 예외: 프로젝트 스코프 스킬은 팀과 공유해야 하므로 추적한다.
+!.omc/skills/
+
 ### Node / pnpm ###
 node_modules/
 .pnpm-store/

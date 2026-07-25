@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"git mv packages/api-client/src/types.ts packages/contract/src/domain.ts 2>/dev/null || mv packages/api-client/src/types.ts packages/contract/src/domain.ts; echo \\\"이동 완료\\\"; ls packages/cont...",
-  "error": "Exit code 1\nmv: rename packages/api-client/src/types.ts to packages/contract/src/domain.ts: No such file or directory\n이동 완료\nls: packages/contract/src/: No such file or directory\npackages/api-client/src/:\nclient.ts\nendpoints.ts\nerrors.ts\nindex.ts\ntypes.ts",
-  "timestamp": "2026-07-25T09:27:48.295Z",
-  "retry_count": 1
-}
