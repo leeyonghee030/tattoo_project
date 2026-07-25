@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["ES2023"],
+    "types": ["node"]
+    // allowImportingTsExtensions는 tsconfig.base.json에 있다 (이유는 그쪽 주석 참고)
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
