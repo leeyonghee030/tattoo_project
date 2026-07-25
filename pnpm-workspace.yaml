@@ -1,0 +1,11 @@
+packages:
+  - 'apps/web'
+  - 'packages/*'
+
+# Tailwind v4 / Next.js가 요구하는 네이티브 바이너리 빌드 허용
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - sharp
+  - unrs-resolver
+  - esbuild
+  - msw

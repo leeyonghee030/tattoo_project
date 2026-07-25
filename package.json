@@ -1,0 +1,27 @@
+{
+  "name": "tattoo-project",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.33.3",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @tattoo/web dev",
+    "build": "pnpm --filter @tattoo/web build",
+    "start": "pnpm --filter @tattoo/web start",
+    "lint": "pnpm -r --parallel lint",
+    "typecheck": "pnpm -r --parallel typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,css,md}\"",
+    "api:dev": "./gradlew :api:bootRun",
+    "api:build": "./gradlew :api:build",
+    "db:generate": "pnpm --filter @tattoo/contract generate",
+    "db:check": "pnpm --filter @tattoo/contract check"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2",
+    "prettier-plugin-tailwindcss": "0.7.1",
+    "typescript": "5.9.3"
+  }
+}
